@@ -1019,7 +1019,7 @@ document.querySelectorAll('.slide4-card .card-glow').forEach(glow => {
 
   const scene = new THREE.Scene();
   const camera3d = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera3d.position.set(0, 0, 3.5);
+  camera3d.position.set(0, 0, 2.5);
 
   // Particles geometry
   const geometry = new THREE.BufferGeometry();

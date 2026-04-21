@@ -1379,10 +1379,10 @@ body.scroll-locked {
 }
 
 .slide5-3d-wrap {
-  width: 450px;
-  height: 450px;
+  width: 550px;
+  height: 550px;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   display: flex;
   align-items: center;
