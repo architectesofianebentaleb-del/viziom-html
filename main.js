@@ -722,7 +722,7 @@
 (function () {
   const section3 = document.getElementById('section-3');
   const slidesContainer = document.getElementById('slides-container');
-  const totalSlides = 7;
+  const totalSlides = 6;
   let currentSlide = 0;
   let active = false;
   let transitioning = false;
@@ -766,7 +766,10 @@
     if (!bottomVisible) return;
 
     if (e.deltaY < 0 && currentSlide === 0) return;
-    if (e.deltaY > 0 && currentSlide === totalSlides - 1) return;
+    if (e.deltaY > 0 && currentSlide === totalSlides - 1) {
+  openSection4();
+  return;
+}
 
     e.preventDefault();
 
@@ -785,7 +788,6 @@
 (function () {
   const overlay = document.getElementById('pixel-overlay');
   const section4 = document.getElementById('section-4');
-  const galerieBtn = document.getElementById('galerie-btn');
   const CELL_SIZE = 60;
 
   function buildPixels() {
@@ -814,7 +816,7 @@
     return overlay.querySelectorAll('.pixel-cell');
   }
 
-  function openSection4() {
+  window.openSection4 = function openSection4() {
     overlay.style.display = 'block';
     const cells = buildPixels();
     const total = cells.length;
@@ -857,7 +859,6 @@
     });
   };
 
-  galerieBtn.addEventListener('click', openSection4);
 })();
 
 /* ── Carousel slide 1 ── */
@@ -1154,9 +1155,6 @@ document.querySelectorAll('.slide4-card .card-glow').forEach(glow => {
     const cards = slide5.querySelectorAll('.slide-card');
     cards.forEach((card, i) => {
       card.addEventListener('mouseenter', () => morphTo(i));
-      card.addEventListener('mouseleave', () => {
-        // stay on last hovered shape
-      });
     });
   }
 })();
