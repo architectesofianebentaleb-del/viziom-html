@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: transparent; }
+#morph-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#morph-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#morph-label {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.3);
+  white-space: nowrap;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+<div id="morph-container">
+  <canvas id="morph-canvas"></canvas>
+  <div id="morph-label">Survolez une carte</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const canvas = document.getElementById('morph-canvas');
+  const label = document.getElementById('morph-label');
+  const container = document.getElementById('morph-container');
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 0, 4);
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+  const dirLight1 = new THREE.DirectionalLight(0x00E5CC, 1.2);
+  dirLight1.position.set(2, 3, 2);
+  scene.add(dirLight1);
+  const dirLight2 = new THREE.DirectionalLight(0x00E5CC, 0.4);
+  dirLight2.position.set(-2, -1, -1);
+  scene.add(dirLight2);
+  const pointLight = new THREE.PointLight(0xffffff, 0.6, 10);
+  pointLight.position.set(0, 2, 3);
+  scene.add(pointLight);
+
+  const ACCENT = new THREE.Color(0x00E5CC);
+
+  // Material
+  const material = new THREE.MeshPhongMaterial({
+    color: 0x00E5CC,
+    emissive: 0x003333,
+    specular: 0xffffff,
+    shininess: 80,
+    transparent: true,
+    opacity: 0.95,
+    wireframe: false,
+  });
+
+  // ── Shape generators ──
+
+  // Shape 0 (default): abstract floating orb
+  function makeOrb(detail = 32) {
+    const geo = new THREE.SphereGeometry(1, detail, detail);
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      const n = Math.sin(x * 3 + 1) * Math.cos(y * 3) * Math.sin(z * 2) * 0.18;
+      const len = Math.sqrt(x*x + y*y + z*z);
+      pos.setXYZ(i, x/len * (1 + n), y/len * (1 + n), z/len * (1 + n));
+    }
+    geo.computeVertexNormals();
+    return geo;
+  }
+
+  // Shape 1 (Films 3D): camera-like — rounded box with lens
+  function makeCamera(detail = 32) {
+    const geo = new THREE.SphereGeometry(1, detail, detail);
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      let x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      // flatten into camera body shape
+      const bodyX = Math.max(-0.9, Math.min(0.9, x * 1.3));
+      const bodyY = Math.max(-0.6, Math.min(0.6, y * 0.9));
+      const bodyZ = Math.max(-0.5, Math.min(0.5, z * 0.7));
+      // lens protrusion on front
+      const lensFront = z > 0 ? Math.exp(-(x*x + y*y) * 2.5) * 0.5 : 0;
+      pos.setXYZ(i, bodyX, bodyY, bodyZ + lensFront);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  }
+
+  // Shape 2 (Web 3D): globe with latitude/longitude distortion
+  function makeGlobe(detail = 32) {
+    const geo = new THREE.SphereGeometry(1, detail, detail);
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      const lat = Math.asin(y);
+      const lon = Math.atan2(x, z);
+      const bump = Math.sin(lat * 6) * Math.cos(lon * 6) * 0.08;
+      const r = 1 + bump;
+      pos.setXYZ(i, x * r, y * r, z * r);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  }
+
+  // Shape 3 (Scrollytelling): wave/ribbon form
+  function makeWave(detail = 32) {
+    const geo = new THREE.SphereGeometry(1, detail, detail);
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      let x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      // Flatten and wave
+      const wave = Math.sin(y * Math.PI * 2) * 0.3;
+      const squeeze = 1 - Math.abs(y) * 0.3;
+      pos.setXYZ(i, x * squeeze * 1.2, y * 1.1, z * squeeze * 0.6 + wave);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  }
+
+  // Shape 4 (Parfum): perfume bottle
+  function makePerfume(detail = 32) {
+    const geo = new THREE.SphereGeometry(1, detail, detail);
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      let x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      // Bottle profile: wider at bottom, narrow neck at top
+      const t = (y + 1) / 2; // 0=bottom, 1=top
+      let r;
+      if (t < 0.15) {
+        // flat base
+        r = 0.75 + t * 0.5;
+      } else if (t < 0.65) {
+        // main body — elegant oval
+        r = 0.95 - Math.pow((t - 0.4) / 0.3, 2) * 0.15;
+      } else if (t < 0.78) {
+        // shoulder taper
+        r = 0.95 - (t - 0.65) / 0.13 * 0.55;
+      } else if (t < 0.9) {
+        // neck
+        r = 0.38;
+      } else {
+        // cap
+        r = 0.42 + (t - 0.9) * 0.3;
+      }
+      const len = Math.sqrt(x*x + z*z) || 0.001;
+      const flatZ = z / len;
+      const flatX = x / len;
+      // slight depth flatten for bottle look
+      pos.setXYZ(i, flatX * r * 0.82, y * 1.05, flatZ * r * 0.55);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  }
+
+  const shapes = [makeOrb, makeCamera, makeGlobe, makeWave, makePerfume];
+  const labels = ['', 'Films 3D & Motion', 'Web 3D Temps Réel', 'Scrollytelling', 'Démos Produit'];
+  const DETAIL = 48;
+
+  // Build all target geometries
+  const targetGeos = shapes.map(fn => fn(DETAIL));
+
+  // Current working geometry (morph target)
+  let currentGeo = makeOrb(DETAIL);
+  const mesh = new THREE.Mesh(currentGeo, material);
+  scene.add(mesh);
+
+  // Store positions for interpolation
+  function getPositions(geo) {
+    return Float32Array.from(geo.attributes.position.array);
+  }
+
+  let fromPositions = getPositions(targetGeos[0]);
+  let toPositions = getPositions(targetGeos[0]);
+  let morphProgress = 1;
+  let morphDuration = 1.2; // seconds
+  let morphElapsed = 0;
+  let currentShape = 0;
+  let targetShape = 0;
+
+  function morphTo(index) {
+    if (index === targetShape && morphProgress >= 1) return;
+    fromPositions = getCurrentPositions();
+    targetShape = index;
+    toPositions = getPositions(targetGeos[index]);
+    morphProgress = 0;
+    morphElapsed = 0;
+    label.textContent = labels[index] || 'Survolez une carte';
+    label.style.opacity = index === 0 ? '0.3' : '0.7';
+  }
+
+  function getCurrentPositions() {
+    return Float32Array.from(mesh.geometry.attributes.position.array);
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+  }
+
+  // Resize
+  function resize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Auto rotation
+  let autoRotX = 0, autoRotY = 0;
+  let mouseX = 0, mouseY = 0;
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  let lastTime = 0;
+  function animate(time) {
+    requestAnimationFrame(animate);
+    const dt = Math.min((time - lastTime) / 1000, 0.05);
+    lastTime = time;
+
+    // Morph update
+    if (morphProgress < 1) {
+      morphElapsed += dt;
+      morphProgress = Math.min(morphElapsed / morphDuration, 1);
+      const t = easeInOutCubic(morphProgress);
+
+      const pos = mesh.geometry.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const i3 = i * 3;
+        pos.array[i3]     = fromPositions[i3]     + (toPositions[i3]     - fromPositions[i3])     * t;
+        pos.array[i3 + 1] = fromPositions[i3 + 1] + (toPositions[i3 + 1] - fromPositions[i3 + 1]) * t;
+        pos.array[i3 + 2] = fromPositions[i3 + 2] + (toPositions[i3 + 2] - fromPositions[i3 + 2]) * t;
+      }
+      pos.needsUpdate = true;
+      mesh.geometry.computeVertexNormals();
+    }
+
+    // Rotation
+    autoRotY += dt * 0.3;
+    mesh.rotation.y = autoRotY + mouseX * 0.4;
+    mesh.rotation.x = mouseY * 0.25;
+
+    // Floating
+    mesh.position.y = Math.sin(time * 0.001) * 0.08;
+
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+
+  // Expose API
+  window.morphTo3D = morphTo;
+})();
+</script>
+</body>
+</html>

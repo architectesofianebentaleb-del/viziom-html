@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -237,20 +238,81 @@
     <div class="slide-right">
       <div class="slide-carousel">
         <div class="carousel-track" id="carousel-1">
-  <div class="carousel-slide"><img src="assets/carrousel_1.png" alt="Visual 1" draggable="false" /></div>
-  <div class="carousel-slide"><img src="assets/carrousel_2.png" alt="Visual 2" draggable="false" /></div>
-  <div class="carousel-slide"><img src="assets/carrousel_3.png" alt="Visual 3" draggable="false" /></div>
-  <div class="carousel-slide"><img src="assets/carrousel_4.png" alt="Visual 4" draggable="false" /></div>
-</div>
-        <div class="carousel-dots" id="dots-1">
-          <span class="carousel-dot active"></span>
-          <span class="carousel-dot"></span>
-          <span class="carousel-dot"></span>
-          <span class="carousel-dot"></span>
+          <div class="carousel-slide"><img src="assets/carrousel_2.png" alt="Visual 2" draggable="false" /></div>
+          <div class="carousel-slide"><img src="assets/carrousel_3.png" alt="Visual 3" draggable="false" /></div>
+          <div class="carousel-slide"><img src="assets/carrousel_1.png" alt="Visual 1" draggable="false" /></div>
+          <div class="carousel-slide"><img src="assets/carrousel_4.png" alt="Visual 4" draggable="false" /></div>
         </div>
+      </div>
+      <div class="carousel-dots" id="dots-1">
+        <span class="carousel-dot active"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="slide" id="slide-5">
+  <div class="slide3-inner">
+
+    <!-- HEADER centré -->
+    <div class="slide3-header">
+      <h2 class="slide-title" style="text-align:center;">3D, Motion &<br>Expériences Immersives</h2>
+      <p class="slide-accent" style="text-align:center;">Du film cinéma à l'expérience interactive : la 3D maîtrisée dans toutes ses dimensions.</p>
+      <p class="slide-desc" style="text-align:center; max-width:600px;">Nous maîtrisons la 3D précalculée et la 3D temps réel — pour produire aussi bien des films d'animation premium que des expériences interactives engageantes.</p>
+    </div>
+
+    <!-- BODY : cards gauche + carousel + cards droite -->
+    <div class="slide3-body">
+
+      <!-- Cards gauche -->
+      <div class="slide3-cards-col">
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">01</span>
+          <h3>Films 3D & motion design</h3>
+          <p>Rendus photoréalistes, animations stylisées et films publicitaires avec Cinema 4D, Blender, After Effects.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">03</span>
+          <h3>Scrollytelling immersif</h3>
+          <p>Animations 3D synchronisées au scroll pour une narration progressive et mémorable.</p>
+        </div>
+      </div>
+
+      <!-- Carousel central -->
+      <div class="slide3-carousel-wrap">
+  <div class="slide5-3d-wrap">
+    <canvas id="morph-canvas"></canvas>
+    <div id="morph-label">Survolez une carte</div>
+  </div>
+</div>
+
+      <!-- Cards droite -->
+      <div class="slide3-cards-col">
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">02</span>
+          <h3>Expériences web 3D & temps réel</h3>
+          <p>WebGL, Three.js, Unreal, Unity — des univers 3D intégrés directement dans votre site ou application.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">04</span>
+          <h3>Démos produit & jumeaux numériques</h3>
+          <p>Configurateurs 3D, présentations photoréalistes et prototypes virtuels explorables à 360°.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -266,10 +328,10 @@
 
     <!-- 4 IMAGES -->
     <div class="slide4-images">
-      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 1</div></div>
-      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 2</div></div>
-      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 3</div></div>
-      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 4</div></div>
+      <div class="slide4-img"><img src="assets/slide4_img1.png" alt="Visual 1" draggable="false" /></div>
+      <div class="slide4-img"><img src="assets/slide4_img2.png" alt="Visual 2" draggable="false" /></div>
+      <div class="slide4-img"><img src="assets/slide4_img3.png" alt="Visual 3" draggable="false" /></div>
+      <div class="slide4-img"><img src="assets/slide4_img4.png" alt="Visual 4" draggable="false" /></div>
     </div>
 
     <!-- 4 CARDS -->
@@ -307,8 +369,6 @@
   </div>
 </div>
 
-
-    <div class="slide" id="slide-5"><p class="slide-test">Slide 5</p></div>
 
 <div class="slide" id="slide-2">
   <div class="slide-inner">
@@ -391,7 +451,7 @@
   </div>
 </div>
 
-    <div class="slide" id="slide-3">
+<div class="slide" id="slide-3">
   <div class="slide3-inner">
 
     <!-- HEADER centré -->
@@ -425,18 +485,18 @@
       <!-- Carousel central -->
       <div class="slide3-carousel-wrap">
         <div class="slide-carousel">
-         <div class="carousel-track" id="carousel-3">
-  <div class="carousel-slide"><img src="assets/slide3_img1.png" alt="Visual 1" draggable="false" /></div>
-  <div class="carousel-slide"><img src="assets/slide3_img2.png" alt="Visual 2" draggable="false" /></div>
-  <div class="carousel-slide"><img src="assets/slide3_img3.png" alt="Visual 3" draggable="false" /></div>
-  <div class="carousel-slide"><img src="assets/slide3_img4.png" alt="Visual 4" draggable="false" /></div>
-</div>
-          <div class="carousel-dots" id="dots-3">
+          <div class="carousel-track" id="carousel-3">
+            <div class="carousel-slide"><img src="assets/slide3_img1.png" alt="Visual 1" draggable="false" /></div>
+            <div class="carousel-slide"><img src="assets/slide3_img2.png" alt="Visual 2" draggable="false" /></div>
+            <div class="carousel-slide"><img src="assets/slide3_img3.png" alt="Visual 3" draggable="false" /></div>
+            <div class="carousel-slide"><img src="assets/slide3_img4.png" alt="Visual 4" draggable="false" /></div>
+          </div>
+        </div>
+        <div class="carousel-dots" id="dots-3">
             <span class="carousel-dot active"></span>
             <span class="carousel-dot"></span>
             <span class="carousel-dot"></span>
             <span class="carousel-dot"></span>
-          </div>
         </div>
       </div>
 
@@ -462,9 +522,69 @@
   </div>
 </div>
 
+<div class="slide" id="slide-7">
+  <div class="slide-inner">
 
-    <div class="slide" id="slide-6"><button id="galerie-btn">Notre galerie</button>
+    <!-- GAUCHE : carousel -->
+    <div class="slide-right" style="order:-1;">
+      <div class="slide-carousel">
+        <div class="carousel-track" id="carousel-7">
+          <div class="carousel-slide"><img src="assets/slide7_img1.png" alt="Visual 1" draggable="false" /></div>
+          <div class="carousel-slide"><img src="assets/slide7_img2.png" alt="Visual 2" draggable="false" /></div>
+          <div class="carousel-slide"><img src="assets/slide7_img3.png" alt="Visual 3" draggable="false" /></div>
+          <div class="carousel-slide"><img src="assets/slide7_img4.png" alt="Visual 4" draggable="false" /></div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="dots-7">
+        <span class="carousel-dot active"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+      </div>
+    </div>
+
+    <!-- DROITE : texte + cards -->
+    <div class="slide-left">
+      <h2 class="slide-title">Structure Cloud,<br>Sécurité & DevOps</h2>
+      <p class="slide-accent">La puissance invisible qui garantit performance, stabilité et protection.</p>
+      <p class="slide-desc">Au-delà du code, nous construisons l'infrastructure qui garantit disponibilité, rapidité, sécurité et scalabilité — pour que votre plateforme tienne la charge et protège vos données.</p>
+
+      <div class="slide-cards">
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">01</span>
+          <h3>Architecture cloud scalable</h3>
+          <p>Architectures capables d'absorber les pics de trafic avec ressources adaptatives pour garantir disponibilité et stabilité.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">02</span>
+          <h3>Déploiements propres (DevOps)</h3>
+          <p>Processus de déploiement fiables et automatisés. Mises à jour continues sans interruption de service.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">03</span>
+          <h3>Sécurité</h3>
+          <p>Sécurité intégrée dès la conception avec audits réguliers et prévention active des failles.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">04</span>
+          <h3>Conformité RGPD</h3>
+          <p>Gestion rigoureuse des données et consentements respectant les bonnes pratiques RGPD.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+    <div class="slide" id="slide-6"><button id="galerie-btn">Notre galerie</button></div>
   </div>
 
   <div id="slides-progress">
