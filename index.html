@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIZIOM — Studio Créatif & Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Page Loader -->
+  <div id="page-loader">
+    <p id="loader-logo">VIZIOM<span>.</span></p>
+    <p id="loader-sub">Vous allez être redirigé vers le site…</p>
+    <div id="loader-bar-track">
+      <div id="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="header">
+    <div id="header-inner">
+      <!-- LEFT -->
+<div id="header-left">
+
+  <div id="burger-pill-wrap">
+    <div id="burger-pill">
+      <span id="burger-pill-logo">VIZIOM<span>.</span></span>
+      <div id="burger-pill-spacer"></div>
+      <button id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span class="burger-line" id="burger-line-1"></span>
+        <span class="burger-line" id="burger-line-2"></span>
+      </button>
+    </div>
+    <div id="burger-dropdown">
+      <a href="#expertise" class="dropdown-link" onclick="closeMenu()">Expertise <span>&#8599;</span></a>
+      <a href="#portfolio" class="dropdown-link" onclick="closeMenu()">Projets <span>&#8599;</span></a>
+      <a href="#approche" class="dropdown-link" onclick="closeMenu()">Approche <span>&#8599;</span></a>
+    </div>
+  </div>
+
+  <a href="/" id="header-logo" aria-label="VIZIOM — Accueil">VIZIOM<span>.</span></a>
+
+  <nav id="desktop-nav" aria-label="Navigation principale">
+    <div id="nav-pill-highlight"></div>
+    <a href="#expertise" class="nav-link">Expertise</a>
+    <a href="#portfolio" class="nav-link">Projets</a>
+    <a href="#approche" class="nav-link">Approche</a>
+  </nav>
+
+  <button id="mobile-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+  </button>
+
+</div>
+
+      <!-- RIGHT -->
+      <a href="#contact" id="header-cta">Démarrer un projet <span>&#8599;</span></a>
+    </div>
+  </header>
+
+  <!-- Backdrop -->
+  <div id="backdrop" onclick="closeMenu()"></div>
+
+  <!-- Mobile fullscreen menu -->
+  <div id="mobile-menu">
+    <nav aria-label="Navigation mobile">
+      <a href="#expertise" class="mobile-link" onclick="closeMenu()">Expertise</a>
+      <a href="#portfolio" class="mobile-link" onclick="closeMenu()">Projets</a>
+      <a href="#approche" class="mobile-link" onclick="closeMenu()">Approche</a>
+    </nav>
+    <a href="#contact" class="mobile-cta" onclick="closeMenu()">Démarrer un projet <span>&#8599;</span></a>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero" aria-label="Hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div id="hero-glow" aria-hidden="true"></div>
+    <div id="hero-grain" aria-hidden="true"></div>
+
+    <div id="hero-content">
+      <!-- Title -->
+      <div id="hero-title-wrap">
+        <h1 id="hero-title">
+          <span class="hero-line" id="line-0"><span class="hero-line-inner"></span></span>
+          <span class="hero-line" id="line-1"><span class="hero-line-inner"></span></span>
+          <span class="hero-line" id="line-2"><span class="hero-line-inner"></span></span>
+        </h1>
+        <!-- Black hover layer -->
+        <div id="hero-title-black" aria-hidden="true">
+          <h1>
+            <span class="hero-line"><span class="hero-line-inner"></span></span>
+            <span class="hero-line"><span class="hero-line-inner"></span></span>
+            <span class="hero-line"><span class="hero-line-inner"></span></span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p id="hero-desc">
+        Viziom est un studio créatif spécialisé en design d'interfaces,
+        développement sur-mesure et direction artistique — pour des marques
+        qui veulent marquer les esprits.
+      </p>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div id="scroll-indicator" aria-hidden="true">
+      <div id="scroll-line-track">
+        <div id="scroll-line-fill"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifesto Section -->
+  <section id="manifesto">
+    <div id="manifesto-inner">
+      <button id="back-btn" style="display:none">Revenir</button>
+      <p class="manifesto-item" id="m-label">[ STUDIO CRÉATIF &amp; DIGITAL ]</p>
+      <p class="manifesto-item manifesto-headline" id="m-line1">Pour les marques qui refusent</p>
+      <p class="manifesto-item manifesto-headline manifesto-muted" id="m-line2">d'être ordinaires.</p>
+      <p class="manifesto-item manifesto-headline" id="m-line1">Du site vitrine à la plateforme complexe, nous créons des expériences digitales</p>
+      <p class="manifesto-item manifesto-headline manifesto-muted" id="m-line2">uniques qui vous appartiennent.</p>
+      <p class="manifesto-item manifesto-sub" id="m-sub">Passez un cap sur votre identités</p>
+      <a href="#contact" class="manifesto-item manifesto-cta" id="m-cta"></a>
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+<section id="section-3">
+  <div id="section-3-bg"></div>
+  <div id="marquee-wrap">
+    <div id="marquee-track">
+      <img class="marquee-item" src="assets/logo-client1.png" alt="Client 1" />
+      <img class="marquee-item" src="assets/logo-client2.png" alt="Client 2" />
+      <img class="marquee-item" src="assets/logo-client3.png" alt="Client 3" />
+      <img class="marquee-item" src="assets/logo-client4.png" alt="Client 4" />
+      <img class="marquee-item" src="assets/logo-client5.png" alt="Client 5" />
+      <img class="marquee-item" src="assets/logo-client6.png" alt="Client 6" />
+      <img class="marquee-item" src="assets/logo-client7.png" alt="Client 7" />
+      <img class="marquee-item" src="assets/logo-client8.png" alt="Client 8" />
+      <img class="marquee-item" src="assets/logo-client9.png" alt="Client 9" />
+      <img class="marquee-item" src="assets/logo-client10.png" alt="Client 10" />
+      <img class="marquee-item" src="assets/logo-client11.png" alt="Client 11" />
+      <img class="marquee-item" src="assets/logo-client12.png" alt="Client 12" />
+      <img class="marquee-item" src="assets/logo-client13.png" alt="Client 13" />
+      <img class="marquee-item" src="assets/logo-client14.png" alt="Client 14" />
+      <img class="marquee-item" src="assets/logo-client15.png" alt="Client 15" />
+      <img class="marquee-item" src="assets/logo-client16.png" alt="Client 16" />
+      <img class="marquee-item" src="assets/logo-client17.png" alt="Client 17" />
+      <img class="marquee-item" src="assets/logo-client18.png" alt="Client 18" />
+      <img class="marquee-item" src="assets/logo-client19.png" alt="Client 19" />
+      <img class="marquee-item" src="assets/logo-client20.png" alt="Client 20" />
+      <img class="marquee-item" src="assets/logo-client21.png" alt="Client 21" />
+      <img class="marquee-item" src="assets/logo-client22.png" alt="Client 22" />
+      <img class="marquee-item" src="assets/logo-client23.png" alt="Client 23" />
+      <img class="marquee-item" src="assets/logo-client24.png" alt="Client 24" />
+      <!-- Duplicate pour loop infinie -->
+      <img class="marquee-item" src="assets/logo-client1.png" alt="Client 1" />
+      <img class="marquee-item" src="assets/logo-client2.png" alt="Client 2" />
+      <img class="marquee-item" src="assets/logo-client3.png" alt="Client 3" />
+      <img class="marquee-item" src="assets/logo-client4.png" alt="Client 4" />
+      <img class="marquee-item" src="assets/logo-client5.png" alt="Client 5" />
+      <img class="marquee-item" src="assets/logo-client6.png" alt="Client 6" />
+      <img class="marquee-item" src="assets/logo-client7.png" alt="Client 7" />
+      <img class="marquee-item" src="assets/logo-client8.png" alt="Client 8" />
+      <img class="marquee-item" src="assets/logo-client9.png" alt="Client 9" />
+      <img class="marquee-item" src="assets/logo-client10.png" alt="Client 10" />
+      <img class="marquee-item" src="assets/logo-client11.png" alt="Client 11" />
+      <img class="marquee-item" src="assets/logo-client12.png" alt="Client 12" />
+      <img class="marquee-item" src="assets/logo-client13.png" alt="Client 13" />
+      <img class="marquee-item" src="assets/logo-client14.png" alt="Client 14" />
+      <img class="marquee-item" src="assets/logo-client15.png" alt="Client 15" />
+      <img class="marquee-item" src="assets/logo-client16.png" alt="Client 16" />
+      <img class="marquee-item" src="assets/logo-client17.png" alt="Client 17" />
+      <img class="marquee-item" src="assets/logo-client18.png" alt="Client 18" />
+      <img class="marquee-item" src="assets/logo-client19.png" alt="Client 19" />
+      <img class="marquee-item" src="assets/logo-client20.png" alt="Client 20" />
+      <img class="marquee-item" src="assets/logo-client21.png" alt="Client 21" />
+      <img class="marquee-item" src="assets/logo-client22.png" alt="Client 22" />
+      <img class="marquee-item" src="assets/logo-client23.png" alt="Client 23" />
+      <img class="marquee-item" src="assets/logo-client24.png" alt="Client 24" />
+    </div>
+  </div>
+  <div id="slides-container">
+    <div class="slide" id="slide-1">
+  <div class="slide-inner">
+
+    <!-- GAUCHE -->
+    <div class="slide-left">
+      <h2 class="slide-title">Direction Artistique<br>& UI/UX Design</h2>
+      <p class="slide-accent">Des identités digitales qui marquent, et des interfaces qui convertissent.</p>
+      <p class="slide-desc">Nous concevons des expériences visuelles premium qui captent immédiatement l'attention et guident l'utilisateur sans friction — de la marque complète jusqu'aux interfaces haute-fidélité.</p>
+
+      <div class="slide-cards">
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">01</span>
+          <h3>Branding complet</h3>
+          <p>Identités de marque solides : univers visuel, typographies, couleurs et charte graphique cohérente sur tous les supports.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">02</span>
+          <h3>UI Design</h3>
+          <p>Maquettes haute-fidélité pour le web et mobile, avec design system structuré et composants réutilisables.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">03</span>
+          <h3>UX Design</h3>
+          <p>Parcours utilisateur optimisés, réduction des frictions et micro-interactions pensées pour la conversion.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">04</span>
+          <h3>Adaptation aux guidelines</h3>
+          <p>Respect strict de votre charte existante pour des interfaces cohérentes, performantes et fidèles à votre identité.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROITE -->
+    <div class="slide-right">
+      <div class="slide-carousel">
+        <div class="carousel-track" id="carousel-1">
+  <div class="carousel-slide"><img src="assets/carrousel_1.png" alt="Visual 1" draggable="false" /></div>
+  <div class="carousel-slide"><img src="assets/carrousel_2.png" alt="Visual 2" draggable="false" /></div>
+  <div class="carousel-slide"><img src="assets/carrousel_3.png" alt="Visual 3" draggable="false" /></div>
+  <div class="carousel-slide"><img src="assets/carrousel_4.png" alt="Visual 4" draggable="false" /></div>
+</div>
+        <div class="carousel-dots" id="dots-1">
+          <span class="carousel-dot active"></span>
+          <span class="carousel-dot"></span>
+          <span class="carousel-dot"></span>
+          <span class="carousel-dot"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <div class="slide" id="slide-4">
+  <div class="slide4-inner">
+
+    <!-- HEADER -->
+    <div class="slide4-header">
+      <h2 class="slide4-title">Production Audiovisuelle<br>& Création IA</h2>
+      <p class="slide-accent" style="text-align:center;">L'art du film, la puissance de l'IA.</p>
+      <p class="slide-desc" style="text-align:center; max-width:700px;">Nous combinons le savoir-faire d'un studio classique et la puissance des outils génératifs pour livrer des contenus impactants, originaux et impossibles à produire avec une seule approche.</p>
+    </div>
+
+    <!-- 4 IMAGES -->
+    <div class="slide4-images">
+      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 1</div></div>
+      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 2</div></div>
+      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 3</div></div>
+      <div class="slide4-img"><div class="slide4-img-placeholder">Visual 4</div></div>
+    </div>
+
+    <!-- 4 CARDS -->
+    <div class="slide4-cards">
+      <div class="slide4-card slide-card">
+        <div class="card-glow"></div>
+        <div class="slide-card-bar"></div>
+        <span class="slide4-card-num">01</span>
+        <h3>Préproduction &<br>direction créative</h3>
+        <p>Concepts, storyboards, castings et préparation du tournage pour un rendu fidèle à votre intention.</p>
+      </div>
+      <div class="slide4-card slide-card">
+        <div class="card-glow"></div>
+        <div class="slide-card-bar"></div>
+        <span class="slide4-card-num">02</span>
+        <h3>Tournage &<br>captation</h3>
+        <p>Caméras cinéma, optiques haut de gamme, drone, studio ou extérieur selon l'ambition du projet.</p>
+      </div>
+      <div class="slide4-card slide-card">
+        <div class="card-glow"></div>
+        <div class="slide-card-bar"></div>
+        <span class="slide4-card-num">03</span>
+        <h3>Post-production &<br>finition</h3>
+        <p>Montage, étalonnage, sound design et habillage pour un rendu cinéma prêt à diffuser.</p>
+      </div>
+      <div class="slide4-card slide-card">
+        <div class="card-glow"></div>
+        <div class="slide-card-bar"></div>
+        <span class="slide4-card-num">04</span>
+        <h3>Création IA &<br>contenus génératifs</h3>
+        <p>Génération d'images, vidéo IA, voix de synthèse, lipsync et upscaling pour des visuels impossibles.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+    <div class="slide" id="slide-5"><p class="slide-test">Slide 5</p></div>
+
+<div class="slide" id="slide-2">
+  <div class="slide-inner">
+
+    <!-- GAUCHE : 3 images -->
+<div class="slide-left" style="padding: 2rem 0 2rem 2rem;">
+  <div class="slide2-images">
+    <div class="slide2-img-large">
+      <img src="assets/slide_2_img1.png" alt="Visual 1" draggable="false" />
+    </div>
+    <div class="slide2-img-small-col">
+      <div class="slide2-img-small">
+        <img src="assets/slide_2_img2.png" alt="Visual 2" draggable="false" />
+      </div>
+      <div class="slide2-img-small">
+        <img src="assets/slide_2_img3.png" alt="Visual 3" draggable="false" />
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- DROITE : contenu centré -->
+    <div class="slide-right" style="flex-direction: column; align-items: flex-start; justify-content: center; padding: 2rem 3rem 2rem 2rem; overflow-y: auto;">
+      <h2 class="slide-title" style="margin-bottom: 0.5rem;">Développement Web<br>Sur-Mesure</h2>
+      <p class="slide-accent" style="margin-bottom: 0.5rem;">Code pur, performances réelles, zéro limites.</p>
+      <p class="slide-desc" style="margin-bottom: 1.25rem;">Sites et plateformes sur-mesure, sans templates, sans no-code fragile. Code pur pour des performances optimales et une évolutivité sans contraintes.</p>
+
+      <div class="slide-cards" style="margin-bottom: 1rem;">
+  <div class="slide-card">
+    <div class="card-glow"></div>
+    <div class="slide-card-bar"></div>
+    <span class="slide-card-num">01</span>
+    <h3>Performance</h3>
+    <p>Chargements ultra-rapides, interactions fluides et expérience optimisée sous forte charge.</p>
+  </div>
+  <div class="slide-card">
+    <div class="card-glow"></div>
+    <div class="slide-card-bar"></div>
+    <span class="slide-card-num">02</span>
+    <h3>Liberté totale</h3>
+    <p>Design fidèle à vos maquettes, sans contrainte de templates ni compromis fonctionnel.</p>
+  </div>
+  <div class="slide-card">
+    <div class="card-glow"></div>
+    <div class="slide-card-bar"></div>
+    <span class="slide-card-num">03</span>
+    <h3>Fiabilité & scalabilité</h3>
+    <p>Bases techniques propres. Votre plateforme évolue sans refonte complète.</p>
+  </div>
+  <div class="slide-card">
+    <div class="card-glow"></div>
+    <div class="slide-card-bar"></div>
+    <span class="slide-card-num">04</span>
+    <h3>SEO solide</h3>
+    <p>Structure pensée pour le référencement naturel. Pages parfaitement indexables.</p>
+  </div>
+</div>
+
+<div class="slide2-projects-card">
+  <div class="slide-card-bar"></div>
+  <span class="slide-card-num">05</span>
+  <h3>Tous types de projets web</h3>
+  <div class="slide2-projects-grid">
+  <div class="slide2-projects-col">
+    <p><span class="slide2-project-type">Landing pages</span> — Optimisées pour la conversion</p>
+    <p><span class="slide2-project-type">Sites e-commerce</span> — Boutiques avec paiements intégrés</p>
+    <p><span class="slide2-project-type">Plateformes SaaS</span> — Gestion d'utilisateurs et abonnements</p>
+    <p><span class="slide2-project-type">Portfolios</span> — Mise en valeur de vos réalisations</p>
+  </div>
+  <div class="slide2-projects-col">
+    <p><span class="slide2-project-type">Sites vitrines</span> — Entreprise, services, équipe</p>
+    <p><span class="slide2-project-type">Marketplaces</span> — Multi-vendeurs avec commissions</p>
+    <p><span class="slide2-project-type">Espaces membres</span> — Accès restreint et contenus exclusifs</p>
+    <p><span class="slide2-project-type">Blogs & médias</span> — Gestion éditoriale avancée</p>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+</div>
+
+    <div class="slide" id="slide-3">
+  <div class="slide3-inner">
+
+    <!-- HEADER centré -->
+    <div class="slide3-header">
+      <h2 class="slide-title" style="text-align:center;">Applications Mobiles<br>& Solutions SaaS</h2>
+      <p class="slide-accent" style="text-align:center;">Du concept au produit : mobile, web, métiers, croissance.</p>
+      <p class="slide-desc" style="text-align:center; max-width: 600px;">Nous concevons des applications mobiles et des logiciels SaaS capables de gérer des besoins métiers réels. L'objectif : une solution stable, intuitive et prête à scaler.</p>
+    </div>
+
+    <!-- BODY : cards gauche + carousel + cards droite -->
+    <div class="slide3-body">
+
+      <!-- Cards gauche -->
+      <div class="slide3-cards-col">
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">01</span>
+          <h3>Applications mobiles</h3>
+          <p>iOS & Android pensés pour la performance, le responsive et l'onboarding.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">03</span>
+          <h3>Intégrations</h3>
+          <p>CRM, paiements, analytics et API intégrés pour centraliser vos données.</p>
+        </div>
+      </div>
+
+      <!-- Carousel central -->
+      <div class="slide3-carousel-wrap">
+        <div class="slide-carousel">
+         <div class="carousel-track" id="carousel-3">
+  <div class="carousel-slide"><img src="assets/slide3_img1.png" alt="Visual 1" draggable="false" /></div>
+  <div class="carousel-slide"><img src="assets/slide3_img2.png" alt="Visual 2" draggable="false" /></div>
+  <div class="carousel-slide"><img src="assets/slide3_img3.png" alt="Visual 3" draggable="false" /></div>
+  <div class="carousel-slide"><img src="assets/slide3_img4.png" alt="Visual 4" draggable="false" /></div>
+</div>
+          <div class="carousel-dots" id="dots-3">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards droite -->
+      <div class="slide3-cards-col">
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">02</span>
+          <h3>SaaS & logiciels métiers</h3>
+          <p>Dashboards, workflows et back-offices conçus pour simplifier l'opérationnel.</p>
+        </div>
+        <div class="slide-card">
+          <div class="card-glow"></div>
+          <div class="slide-card-bar"></div>
+          <span class="slide-card-num">04</span>
+          <h3>UX produit</h3>
+          <p>Parcours optimisés et logique métier clarifiée pour une adoption rapide et durable.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+    <div class="slide" id="slide-6"><button id="galerie-btn">Notre galerie</button>
+</div>
+  </div>
+
+  <div id="slides-progress">
+    <div id="slides-progress-bar"></div>
+  </div>
+
+</section>
+
+<!-- Pixel transition overlay -->
+<div id="pixel-overlay"></div>
+
+<!-- Section 4 -->
+<section id="section-4">
+  <button id="back-to-s3" onclick="closeSection4()">Revenir</button>
+  <p style="font-family: var(--font-syne); font-size: 3rem; font-weight: 700; color: var(--text);">Section 4</p>
+</section>
+
+  <script src="main.js"></script>
+</body>
+</html>
