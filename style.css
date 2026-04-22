@@ -1428,6 +1428,20 @@ body.scroll-locked {
   height: 100vh;
 }
 
+#contact-logo {
+  position: fixed;
+  top: 1.75rem;
+  left: 3.5rem;
+  z-index: 600;
+  font-family: var(--font-syne);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+#contact-logo span { color: var(--accent); }
+
 #contact-canvas {
   position: fixed;
   inset: 0;
@@ -1471,11 +1485,11 @@ body.scroll-locked {
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
   padding: 5rem 4rem 2rem 4rem;
-  gap: 2rem;
+  gap: 5rem;
 }
 
 /* ── Gauche ── */
@@ -1515,7 +1529,7 @@ body.scroll-locked {
   -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 44px;
 }
 
 .contact-row {
@@ -1525,6 +1539,25 @@ body.scroll-locked {
 }
 
 .contact-field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.contact-input-wrap textarea {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-inter);
+  font-size: 0.875rem;
+  font-weight: 300;
+  font-style: italic;
+  width: 100%;
+  resize: none;
+  line-height: 1.6;
+}
+
+.contact-input-wrap textarea::placeholder {
+  color: rgba(255,255,255,0.35);
+  font-style: italic;
+}
 
 .contact-input-wrap {
   display: flex;
@@ -1632,9 +1665,10 @@ body.scroll-locked {
 #contact-socials {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  align-items: flex-end;
+  gap: 3rem;
+  align-items: flex-start;
   flex-shrink: 0;
+  margin-top: 180px;
 }
 
 .social-pill {
@@ -1670,7 +1704,7 @@ body.scroll-locked {
   max-width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-width 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, padding 0.3s ease;
+  transition: max-width 1.5s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, padding 0.3s ease;
   padding-left: 0;
 }
 
@@ -1703,6 +1737,10 @@ body.scroll-locked {
 #social-instagram {
   animation: float-3 3.2s ease-in-out infinite;
 }
+#social-calendar {
+  animation: float-1 4.2s ease-in-out infinite;
+  margin-top: 3rem;
+}
 
 @keyframes float-1 {
   0%, 100% { transform: translate(0, 0); }
@@ -1718,6 +1756,23 @@ body.scroll-locked {
   0%, 100% { transform: translate(0, 0); }
   33% { transform: translate(1px, 2px); }
   66% { transform: translate(-1px, -1px); }
+}
+
+#contact-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 600;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 3.5rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-family: var(--font-inter);
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.05em;
 }
 
 #pixel-overlay {

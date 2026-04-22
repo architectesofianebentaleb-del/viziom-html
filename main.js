@@ -517,6 +517,10 @@
 
   let transitioning = false;
   let onHero = true;
+  window.addEventListener('contact:close', () => {
+  onHero = true;
+  transitioning = false;
+});
 
   manifesto.style.opacity = '0';
   manifesto.style.display = 'none';
@@ -1301,3 +1305,71 @@ document.querySelectorAll('#budget-tags .contact-tag').forEach(tag => {
   });
 });
 })();
+
+// Scroll sur section 4 → retour hero avec zoom
+  let contactScrolling = false;
+  let contactScrollLocked = false;
+
+  document.getElementById('section-4').addEventListener('wheel', (e) => {
+    if (e.deltaY <= 0) return;
+    if (contactScrollLocked) return;
+    contactScrollLocked = true;
+
+    const section4 = document.getElementById('section-4');
+    const contactInner = document.getElementById('contact-inner');
+    const contactLogo = document.getElementById('contact-logo');
+    const contactFooter = document.getElementById('contact-footer');
+    const backBtn = document.getElementById('back-to-s3');
+    const hero = document.getElementById('hero');
+    const heroCanvas = document.getElementById('hero-canvas');
+    const heroContent = document.getElementById('hero-content');
+    const heroGlow = document.getElementById('hero-glow');
+    const scrollIndicator = document.getElementById('scroll-indicator');
+
+    // Fade out contenu contact
+    gsap.to([contactInner, contactLogo, contactFooter, backBtn], {
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.in',
+      onComplete: () => {
+
+        // Prépare le hero caché derrière
+        hero.style.display = 'flex';
+        hero.style.opacity = '0';
+        heroCanvas.style.display = 'block';
+        heroCanvas.style.transform = 'scale(8)';
+        gsap.set([heroContent, heroGlow, scrollIndicator], { opacity: 0 });
+
+        // Zoom in canvas contact puis fade vers hero
+        gsap.to(contactCanvas, {
+          scale: 8,
+          duration: 1.5,
+          ease: 'power3.in',
+          onComplete: () => {
+            // Cache section 4
+            section4.style.display = 'none';
+            gsap.set(section4, { opacity: 0 });
+            gsap.set([contactInner, contactLogo, contactFooter, backBtn], { opacity: 1 });
+            gsap.set(contactCanvas, { scale: 1 });
+            contactScrollLocked = false;
+
+            // Apparition hero avec dézoom
+            gsap.to(hero, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+            gsap.to(heroCanvas, {
+              scale: 1,
+              duration: 2.2,
+              ease: 'power3.out',
+              onComplete: () => {
+                gsap.to([heroContent, heroGlow, scrollIndicator], {
+                  opacity: 1,
+                  duration: 0.8,
+                  ease: 'power2.out'
+                });
+                window.dispatchEvent(new Event('contact:close'));
+              }
+            });
+          }
+        });
+      }
+    });
+  }, { passive: true });
