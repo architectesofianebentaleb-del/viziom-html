@@ -1383,3 +1383,8 @@ document.querySelectorAll('#budget-tags .contact-tag').forEach(tag => {
       }
     });
   }, { passive: false });
+
+  document.getElementById('header-cta').addEventListener('click', (e) => {
+  e.preventDefault();
+  window.openSection4();
+});
