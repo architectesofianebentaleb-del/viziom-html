@@ -32,30 +32,12 @@
       <!-- LEFT -->
 <div id="header-left">
 
-  <div id="burger-pill-wrap">
-    <div id="burger-pill">
-      <span id="burger-pill-logo">VIZIOM<span>.</span></span>
-      <div id="burger-pill-spacer"></div>
-      <button id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span class="burger-line" id="burger-line-1"></span>
-        <span class="burger-line" id="burger-line-2"></span>
-      </button>
-    </div>
-    <div id="burger-dropdown">
-      <a href="#expertise" class="dropdown-link" onclick="closeMenu()">Expertise <span>&#8599;</span></a>
-      <a href="#portfolio" class="dropdown-link" onclick="closeMenu()">Projets <span>&#8599;</span></a>
-      <a href="#approche" class="dropdown-link" onclick="closeMenu()">Approche <span>&#8599;</span></a>
-    </div>
-  </div>
-
   <a href="/" id="header-logo" aria-label="VIZIOM — Accueil">VIZIOM<span>.</span></a>
 
-  <nav id="desktop-nav" aria-label="Navigation principale">
-    <div id="nav-pill-highlight"></div>
-    <a href="#expertise" class="nav-link">Expertise</a>
-    <a href="#portfolio" class="nav-link">Projets</a>
-    <a href="#approche" class="nav-link">Approche</a>
-  </nav>
+  <nav id="desktop-nav">
+  <div id="nav-pill-highlight"></div>
+  <a href="#manifesto" class="nav-link">Notre expertise</a>
+</nav>
 
   <button id="mobile-burger" aria-label="Ouvrir le menu" aria-expanded="false">
     <span class="burger-line"></span>
@@ -75,9 +57,7 @@
   <!-- Mobile fullscreen menu -->
   <div id="mobile-menu">
     <nav aria-label="Navigation mobile">
-      <a href="#expertise" class="mobile-link" onclick="closeMenu()">Expertise</a>
-      <a href="#portfolio" class="mobile-link" onclick="closeMenu()">Projets</a>
-      <a href="#approche" class="mobile-link" onclick="closeMenu()">Approche</a>
+      <a href="#manifesto" class="nav-link">Notre expertise</a>
     </nav>
     <a href="#contact" class="mobile-cta" onclick="closeMenu()">Démarrer un projet <span>&#8599;</span></a>
   </div>
@@ -598,12 +578,10 @@
   <canvas id="contact-canvas" aria-hidden="true"></canvas>
   <div id="contact-glow" aria-hidden="true"></div>
 
-  <button id="back-to-s3" onclick="closeSection4()">Revenir</button>
+  <button id="back-to-s3" onclick="window.closeSection4()">Revenir</button>
 
   <!-- Contenu principal -->
   <div id="contact-inner">
-
-    <a href="/" id="contact-logo" aria-label="VIZIOM — Accueil">VIZIOM<span>.</span></a>
 
     <!-- GAUCHE -->
     <div id="contact-left">

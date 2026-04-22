@@ -140,7 +140,7 @@ body.custom-cursor-active * { cursor: none !important; }
   position: fixed;
   left: 0; top: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 600;
   opacity: 0;
   transform: translateY(-80px);
 }
@@ -162,157 +162,6 @@ body.custom-cursor-active * { cursor: none !important; }
   gap: 0;
   position: relative;
 }
-
-/* Burger pill wrap */
-#burger-pill-wrap {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  display: none;
-  z-index: 10;
-  align-items: center;
-}
-
-@media (min-width: 768px) { #burger-pill-wrap { display: flex; } }
-
-#burger-pill-wrap.scrolled { margin-right: 10px; }
-
-#burger-pill {
-  overflow: hidden;
-  max-width: 0;
-  opacity: 0;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(22,22,22,0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  pointer-events: none;
-  transition: max-width 1.5s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease, border-radius 0.3s ease;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  z-index: 101;
-}
-
-#burger-pill.scrolled {
-  max-width: 400px;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#burger-pill.menu-open { 
-  border-radius: 8px 8px 0 0; 
-border-bottom: none;
-border-bottom-color: transparent;
-}
-
-#burger-pill-logo {
-  font-family: var(--font-syne);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  padding-left: 14px;
-}
-
-#burger-pill-logo span { color: var(--accent); }
-
-#burger-pill-spacer {
-  width: 150px;
-  flex-shrink: 0;
-}
-
-#burger-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 52px;
-  height: 44px;
-  flex-shrink: 0;
-}
-
-.burger-line {
-  display: block;
-  width: 18px;
-  height: 1.5px;
-  background: var(--text);
-  transform-origin: center;
-  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-
-#burger-pill.menu-open #burger-line-1 { transform: rotate(45deg) translate(0, 3.75px); }
-#burger-pill.menu-open #burger-line-2 { transform: rotate(-45deg) translate(0, -3.75px); }
-
-/* Dropdown */
-#burger-dropdown {
-  position: absolute;
-  top: 38px;
-  left: 0;
-  min-width: 306px;
-  max-height: 0;
-  overflow: hidden;
-  background: rgba(14,14,14,0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 0 0 12px 12px;
-  z-index: 100;
-  pointer-events: none;
-  transition: max-height 1s cubic-bezier(0.16,1,0.3,1);
-}
-
-#burger-dropdown.open {
-  max-height: 400px;
-  pointer-events: auto;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-top: none;
-}
-
-.dropdown-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 32px 24px;
-  font-family: var(--font-syne);
-  font-size: 24px;
-  font-weight: 600;
-  opacity: 1 !important;
-  color: var(--text) !important;
-  border-bottom: none;
-  white-space: nowrap;
-}
-
-.dropdown-link > span:last-child { 
-  opacity: 0.5; font-size: 14px; 
-}
-
-#burger-dropdown.open .dropdown-link { opacity: 1; transform: translateY(0); }
-#burger-dropdown.open .dropdown-link:nth-child(1) { transition-delay: 0.08s; }
-#burger-dropdown.open .dropdown-link:nth-child(2) { transition-delay: 0.14s; }
-#burger-dropdown.open .dropdown-link:nth-child(3) { transition-delay: 0.20s; }
-
-.dropdown-cta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 18px 24px;
-  font-family: var(--font-inter);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  opacity: 0;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  transition: opacity 0.3s ease 0.3s;
-}
-
-#burger-dropdown.open .dropdown-cta { opacity: 1; }
 
 /* Logo */
 #header-logo {
@@ -1428,20 +1277,6 @@ body.scroll-locked {
   height: 100vh;
 }
 
-#contact-logo {
-  position: fixed;
-  top: 1.75rem;
-  left: 3.5rem;
-  z-index: 600;
-  font-family: var(--font-syne);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-#contact-logo span { color: var(--accent); }
-
 #contact-canvas {
   position: fixed;
   inset: 0;
@@ -1461,7 +1296,7 @@ body.scroll-locked {
 
 #back-to-s3 {
   position: fixed;
-  top: 24px;
+  top: 80px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255,255,255,0.08);
