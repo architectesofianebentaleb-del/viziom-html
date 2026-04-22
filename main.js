@@ -2,6 +2,8 @@
    VIZIOM — main.js
    ============================================ */
 
+window._wheelLocked = false;
+
 /* ── Page Loader ── */
 (function () {
   const MIN = 1500, MAX = 3500;
@@ -516,11 +518,13 @@
   const backBtn = document.getElementById('back-btn');
 
   let transitioning = false;
+  window.setTransitioning = function(val) { transitioning = val; };
   let onHero = true;
+  window.setOnHero = function(val) { onHero = val; };
   window.addEventListener('contact:close', () => {
-  onHero = true;
-  transitioning = false;
-});
+    onHero = true;
+    transitioning = false;
+  });
 
   manifesto.style.opacity = '0';
   manifesto.style.display = 'none';
@@ -564,7 +568,6 @@
         manifesto.style.pointerEvents = 'auto';
         afterSections.forEach(el => { el.style.display = ''; el.style.removeProperty('display'); });
         setTimeout(() => window.dispatchEvent(new Event('manifesto:reveal')), 100);
-        // Reset slide 1 pour forcer le repaint
         setTimeout(() => {
           const slidesContainer = document.getElementById('slides-container');
           if (slidesContainer) {
@@ -577,7 +580,7 @@
     }, 2.2);
   }
 
-  function zoomOut() {
+  window.zoomOut = function zoomOut() {
     if (transitioning || onHero) return;
     transitioning = true;
     document.body.classList.add('scroll-locked');
@@ -614,13 +617,33 @@
     tl.to([heroContent, heroGlow, scrollIndicator], { opacity: 1, duration: 0.8, ease: 'power2.out' }, 1.8);
   }
 
+  window.goToHero = function() {
+    transitioning = false;
+    onHero = true;
+    document.body.classList.remove('scroll-locked');
+    manifesto.style.display = 'none';
+    manifesto.style.opacity = '0';
+    manifesto.style.pointerEvents = 'none';
+    afterSections.forEach(el => el.style.display = 'none');
+    backBtn.style.display = 'none';
+    backBtn.style.opacity = '1';
+    gsap.set(canvas, { scale: 1 });
+    canvas.style.display = 'block';
+    hero.style.display = 'flex';
+    gsap.set(hero, { opacity: 1 });
+    gsap.set([heroContent, heroGlow, scrollIndicator], { opacity: 1 });
+  };
+
   backBtn.addEventListener('click', () => {
     window.scrollTo(0, 0);
     zoomOut();
   });
 
   window.addEventListener('wheel', (e) => {
+    if (window._wheelLocked) return;
     if (transitioning) return;
+    const s4 = document.getElementById('section-4');
+    if (s4 && s4.style.display === 'flex') return;
     if (onHero && e.deltaY > 0) zoomIn();
   }, { passive: true });
 
@@ -1307,69 +1330,47 @@ document.querySelectorAll('#budget-tags .contact-tag').forEach(tag => {
 })();
 
 // Scroll sur section 4 → retour hero avec zoom
-  let contactScrolling = false;
   let contactScrollLocked = false;
 
   document.getElementById('section-4').addEventListener('wheel', (e) => {
+    e.stopPropagation();
     if (e.deltaY <= 0) return;
     if (contactScrollLocked) return;
+    const section4 = document.getElementById('section-4');
+    if (section4.style.display !== 'flex') return;
     contactScrollLocked = true;
 
-    const section4 = document.getElementById('section-4');
     const contactInner = document.getElementById('contact-inner');
     const contactLogo = document.getElementById('contact-logo');
     const contactFooter = document.getElementById('contact-footer');
-    const backBtn = document.getElementById('back-to-s3');
-    const hero = document.getElementById('hero');
-    const heroCanvas = document.getElementById('hero-canvas');
-    const heroContent = document.getElementById('hero-content');
-    const heroGlow = document.getElementById('hero-glow');
-    const scrollIndicator = document.getElementById('scroll-indicator');
+    const backBtn2 = document.getElementById('back-to-s3');
+    const cCanvas = document.getElementById('contact-canvas');
 
-    // Fade out contenu contact
-    gsap.to([contactInner, contactLogo, contactFooter, backBtn], {
+    // Fade out contenu
+    gsap.to([contactInner, contactLogo, contactFooter, backBtn2], {
       opacity: 0,
       duration: 0.6,
       ease: 'power2.in',
       onComplete: () => {
-
-        // Prépare le hero caché derrière
-        hero.style.display = 'flex';
-        hero.style.opacity = '0';
-        heroCanvas.style.display = 'block';
-        heroCanvas.style.transform = 'scale(8)';
-        gsap.set([heroContent, heroGlow, scrollIndicator], { opacity: 0 });
-
-        // Zoom in canvas contact puis fade vers hero
-        gsap.to(contactCanvas, {
+        // Zoom in canvas contact
+        gsap.to(cCanvas, {
           scale: 8,
-          duration: 1.5,
+          duration: 1.2,
           ease: 'power3.in',
           onComplete: () => {
-            // Cache section 4
+            gsap.set(cCanvas, { scale: 1 });
             section4.style.display = 'none';
             gsap.set(section4, { opacity: 0 });
-            gsap.set([contactInner, contactLogo, contactFooter, backBtn], { opacity: 1 });
-            gsap.set(contactCanvas, { scale: 1 });
-            contactScrollLocked = false;
-
-            // Apparition hero avec dézoom
-            gsap.to(hero, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-            gsap.to(heroCanvas, {
-              scale: 1,
-              duration: 2.2,
-              ease: 'power3.out',
-              onComplete: () => {
-                gsap.to([heroContent, heroGlow, scrollIndicator], {
-                  opacity: 1,
-                  duration: 0.8,
-                  ease: 'power2.out'
-                });
-                window.dispatchEvent(new Event('contact:close'));
-              }
-            });
+            gsap.set([contactInner, contactLogo, contactFooter, backBtn2], { opacity: 1 });
+            window.scrollTo(0, 0);
+            window._wheelLocked = true;
+            window.goToHero();
+            setTimeout(() => {
+              window._wheelLocked = false;
+              contactScrollLocked = false;
+            }, 1500);
           }
         });
       }
     });
-  }, { passive: true });
+  }, { passive: false });
